@@ -11,7 +11,10 @@ client.on('ready', () => {
 client.on('message', msg => {
   let pinned = [];
   let roles = [];
-  let role = msg.guild.roles.find(role => role.name === 'its a crazy night');
+  // live
+  let role = msg.guild.roles.find(role => role.id === '625799139221045289');
+  // dev
+  // let role = msg.guild.roles.find(role => role.id === '639474539373527041');
 
   if (msg.content !== 'its a crazy night') {
     msg.delete();
