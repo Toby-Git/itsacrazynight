@@ -1,0 +1,26 @@
+{
+  "name": "itsacrazynight",
+  "version": "1.0.0",
+  "description": "itsacrazynight",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
+    "nodemon": "^1.19.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobyJGray/itsacrazynight.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TobyJGray/itsacrazynight/issues"
+  },
+  "homepage": "https://github.com/TobyJGray/itsacrazynight#readme"
+}
