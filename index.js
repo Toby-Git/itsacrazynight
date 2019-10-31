@@ -11,7 +11,7 @@ client.on('ready', () => {
 client.on('message', msg => {
   let pinned = [];
   if (msg.content !== 'its a crazy night') {
-    msg.channel.delete();
+    msg.delete();
   } else {
     msg.channel
       .fetchPinnedMessages()
