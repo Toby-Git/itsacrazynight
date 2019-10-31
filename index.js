@@ -25,7 +25,11 @@ client.on('message', msg => {
         });
 
         if (!pinned.includes(msg.author.username)) {
-          msg.pin();
+          try {
+            msg.pin();
+          } catch (error) {
+            console.log(error);
+          }
         }
       })
       .catch(console.error);
