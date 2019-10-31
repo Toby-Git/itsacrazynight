@@ -40,13 +40,17 @@ client.on('message', msg => {
     roles.push(role.name);
   });
 
-  if (!roles.includes('its a crazy night')) {
-    try {
-      msg.member.addRole(role);
-    } catch (error) {
-      console.log(error);
+  async function addRole() {
+    if (!roles.includes('its a crazy night')) {
+      try {
+        await msg.member.addRole(role);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
+
+  addRole();
 
   if (msg.member.nickname !== 'its a crazy night') {
     msg.member.setNickname('its a crazy night');
