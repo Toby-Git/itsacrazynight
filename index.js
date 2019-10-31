@@ -10,6 +10,9 @@ client.on('ready', () => {
 
 client.on('message', msg => {
   let pinned = [];
+  let roles = [];
+  let role = msg.guild.roles.find(role => role.name === 'its a crazy night');
+
   if (msg.content !== 'its a crazy night') {
     msg.delete();
   } else {
@@ -25,17 +28,32 @@ client.on('message', msg => {
         });
 
         if (!pinned.includes(msg.author.username)) {
-          try {
-            msg.pin();
-          } catch (error) {
-            console.log(error);
-          }
+          msg.pin().catch(e => {
+            console.log(e);
+          });
         }
       })
       .catch(console.error);
   }
 
+  msg.member.roles.forEach(role => {
+    roles.push(role.name);
+  });
+
+  if (!roles.includes('its a crazy night')) {
+    try {
+      msg.member.addRole(role);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   if (msg.member.nickname !== 'its a crazy night') {
     msg.member.setNickname('its a crazy night');
   }
+});
+
+process.on('unhandledRejection', error => {
+  // Will print "unhandledRejection err is not defined"
+  console.log('unhandledRejection', error.message);
 });
