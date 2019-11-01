@@ -1,7 +1,7 @@
 require('dotenv').config({ path: './.env' });
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const owner = process.env.OWNER;
+const Discord = require('discord.js'),
+  client = new Discord.Client(),
+  owner = process.env.OWNER;
 
 client.login(process.env.TOKEN);
 
@@ -11,6 +11,11 @@ client.on('ready', () => {
 
 client.on('guildMemberUpdate', (oldMem, newMem) => {
   if (newMem.nickname !== 'its a crazy night') forceNick(newMem);
+});
+
+// delete editted messages
+client.on('messageUpdate', function(oldMessage, newMessage) {
+  newMessage.delete();
 });
 
 client.on('message', msg => {
