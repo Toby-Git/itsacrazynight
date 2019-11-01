@@ -14,12 +14,9 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 });
 
 client.on('message', msg => {
-  let pinned = [];
-  let roles = [];
-  // live
-  let role = msg.guild.roles.find(role => role.id === '625799139221045289');
-  // dev
-  // let role = msg.guild.roles.find(role => role.id === '639474539373527041');
+  let pinned = [],
+    roles = [],
+    role = msg.guild.roles.find(role => role.id === process.env.ROLE);
 
   if (msg.content !== 'its a crazy night') {
     msg.delete();
