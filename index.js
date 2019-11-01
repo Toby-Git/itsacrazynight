@@ -20,56 +20,61 @@ client.on('messageUpdate', function(oldMessage, newMessage) {
 });
 
 client.on('message', msg => {
-  let pinned = [],
-    roles = [],
-    role = msg.guild.roles.find(role => role.id === process.env.ROLE);
+  if (msg.guild) {
+    let pinned = [],
+      roles = [],
+      rng = Math.floor(Math.random() * 100) + 1,
+      role = msg.guild.roles.find(role => role.id === process.env.ROLE);
 
-  // 1/100 chance to send its a crazy night
-  let rng = Math.floor(Math.random() * 100) + 1;
+    // 1/100 chance to send its a crazy night
+    if (rng === 26) {
+      msg.channel.send('its a crazy night');
+    }
 
-  if (rng === 26) {
-    msg.channel.send('its a crazy night');
-  }
+    if (msg.content !== 'its a crazy night') {
+      msg.delete();
+    } else {
+      // if valid message
+      msg.channel
+        .fetchPinnedMessages()
+        .then(messages => {
+          // and channel less than 50 pins
+          if (messages.size === 50) {
+            return false;
+          }
 
-  if (msg.content !== 'its a crazy night') {
-    msg.delete();
-  } else {
-    // if valid message
-    msg.channel
-      .fetchPinnedMessages()
-      .then(messages => {
-        // and channel less than 50 pins
-        if (messages.size === 50) {
-          return false;
-        }
-
-        // and user not already pinned
-        messages.forEach(message => {
-          pinned.push(message.author.username);
-        });
-
-        //pin
-        if (!pinned.includes(msg.author.username)) {
-          msg.pin().catch(e => {
-            console.log(e);
+          // and user not already pinned
+          messages.forEach(message => {
+            pinned.push(message.author.username);
           });
-        }
-      })
-      .catch(console.error);
-  }
 
-  // get users roles
-  msg.member.roles.forEach(role => {
-    roles.push(role.name);
-  });
-  // add role if not there
-  if (!roles.includes('its a crazy night')) {
-    addRole(msg.member, role);
-  }
+          //pin
+          if (!pinned.includes(msg.author.username)) {
+            msg.pin().catch(e => {
+              console.log(e);
+            });
+          }
+        })
+        .catch(console.error);
+    }
 
-  // force nickname
-  if (msg.member.nickname !== 'its a crazy night') {
-    forceNick(msg.member);
+    // get users roles
+    msg.member.roles.forEach(role => {
+      roles.push(role.name);
+    });
+    // add role if not there
+    if (!roles.includes('its a crazy night')) {
+      addRole(msg.member, role);
+    }
+
+    // force nickname
+    if (msg.member.nickname !== 'its a crazy night') {
+      forceNick(msg.member);
+    }
+  } else if (!msg.author.bot) {
+    // reply to dms / not crash
+    msg.channel.send('its a crazy night');
+    return false;
   }
 });
 
