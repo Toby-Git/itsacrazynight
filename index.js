@@ -24,6 +24,13 @@ client.on('message', msg => {
     roles = [],
     role = msg.guild.roles.find(role => role.id === process.env.ROLE);
 
+  // 1/100 chance to send its a crazy night
+  let rng = Math.floor(Math.random() * 100) + 1;
+
+  if (rng === 26) {
+    msg.channel.send('its a crazy night');
+  }
+
   if (msg.content !== 'its a crazy night') {
     msg.delete();
   } else {
