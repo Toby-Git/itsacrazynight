@@ -1,6 +1,7 @@
 require('dotenv').config({ path: './.env' });
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const owner = process.env.OWNER;
 
 client.login(process.env.TOKEN);
 
