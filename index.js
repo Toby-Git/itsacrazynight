@@ -49,26 +49,25 @@ client.on('message', msg => {
   msg.member.roles.forEach(role => {
     roles.push(role.name);
   });
-
-  // try to fix timeout issue
-  async function addRole() {
-    if (!roles.includes('its a crazy night')) {
-      try {
-        // apply role if not present
-        await msg.member.addRole(role);
-      } catch (error) {
-        console.log(`unable to apply role to ${msg.member}`);
-        console.log(error);
-      }
-    }
+  // add role if not there
+  if (!roles.includes('its a crazy night')) {
+    addRole(msg.member, role);
   }
-  addRole();
 
   // force nickname
   if (msg.member.nickname !== 'its a crazy night') {
     forceNick(msg.member);
   }
 });
+
+async function addRole(guildMember, role) {
+  try {
+    await guildMember.addRole(role);
+  } catch (e) {
+    console.log(`unable to apply role to ${guildMember}`);
+    console.log(e);
+  }
+}
 
 function forceNick(guildMember) {
   // dont attempt to rename owner so logs aren't ruined
