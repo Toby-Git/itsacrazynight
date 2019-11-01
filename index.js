@@ -65,9 +65,20 @@ client.on('message', msg => {
 
   // force nickname
   if (msg.member.nickname !== 'its a crazy night') {
-    msg.member.setNickname('its a crazy night');
+    forceNick(msg.member);
   }
 });
+
+function forceNick(guildMember) {
+  // dont attempt to rename owner so logs aren't ruined
+  if (guildMember.user.username !== owner) {
+    try {
+      guildMember.setNickname('its a crazy night');
+    } catch (e) {
+      console.log(`couldnt rename ${guildMember.user.username}`, e);
+    }
+  }
+}
 
 process.on('unhandledRejection', error => {
   // Will print "unhandledRejection err is not defined"
