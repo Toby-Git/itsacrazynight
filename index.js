@@ -19,17 +19,21 @@ client.on('message', msg => {
   if (msg.content !== 'its a crazy night') {
     msg.delete();
   } else {
+    // if valid message
     msg.channel
       .fetchPinnedMessages()
       .then(messages => {
+        // and channel less than 50 pins
         if (messages.size === 50) {
           return false;
         }
 
+        // and user not already pinned
         messages.forEach(message => {
           pinned.push(message.author.username);
         });
 
+        //pin
         if (!pinned.includes(msg.author.username)) {
           msg.pin().catch(e => {
             console.log(e);
@@ -39,22 +43,26 @@ client.on('message', msg => {
       .catch(console.error);
   }
 
+  // get users roles
   msg.member.roles.forEach(role => {
     roles.push(role.name);
   });
 
+  // try to fix timeout issue
   async function addRole() {
     if (!roles.includes('its a crazy night')) {
       try {
+        // apply role if not present
         await msg.member.addRole(role);
       } catch (error) {
+        console.log(`unable to apply role to ${msg.member}`);
         console.log(error);
       }
     }
   }
-
   addRole();
 
+  // force nickname
   if (msg.member.nickname !== 'its a crazy night') {
     msg.member.setNickname('its a crazy night');
   }
