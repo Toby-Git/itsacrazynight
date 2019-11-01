@@ -9,6 +9,10 @@ client.on('ready', () => {
   console.log('its a crazy night');
 });
 
+client.on('guildMemberUpdate', (oldMem, newMem) => {
+  if (newMem.nickname !== 'its a crazy night') forceNick(newMem);
+});
+
 client.on('message', msg => {
   let pinned = [];
   let roles = [];
