@@ -43,6 +43,7 @@ client.on('message', msg => {
     }
 
     if (msg.content !== 'its a crazy night') {
+      debug ? console.log(`deleting ${msg.content}`) : '';
       msg.delete();
     } else {
       // if valid message
