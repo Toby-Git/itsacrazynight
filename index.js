@@ -27,14 +27,18 @@ client.on('messageUpdate', function(oldMessage, newMessage) {
 });
 
 client.on('message', msg => {
-  if (msg.guild) {
+  var debug = process.env.DEBUG;
+
+  if (msg.guild && !msg.author.bot) {
     let pinned = [],
       roles = [],
       rng = Math.floor(Math.random() * 100) + 1,
       role = msg.guild.roles.find(role => role.id === process.env.ROLE);
 
     // 1/100 chance to send its a crazy night
+    debug ? console.log(rng) : '';
     if (rng === 26) {
+      debug ? console.log('should have sent it bro') : '';
       msg.channel.send('its a crazy night');
     }
 
