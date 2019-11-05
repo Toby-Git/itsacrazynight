@@ -37,7 +37,7 @@ client.on('message', msg => {
 
     // 1/100 chance to send its a crazy night
     debug ? console.log(rng) : '';
-    if (rng === 26) {
+    if (rng <= 10) {
       debug ? console.log('should have sent it bro') : '';
       msg.channel.send('its a crazy night');
     }
