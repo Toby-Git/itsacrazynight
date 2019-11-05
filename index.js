@@ -39,14 +39,14 @@ client.on('message', msg => {
       role = msg.guild.roles.find(role => role.id === process.env.ROLE);
 
     // 1/100 chance to send its a crazy night
-    debug ? console.log(rng) : '';
+    debug == 1 ? console.log(rng) : '';
     if (rng <= 10) {
-      debug ? console.log('should have sent it bro') : '';
+      debug == 1 ? console.log('should have sent it bro') : '';
       msg.channel.send('its a crazy night');
     }
 
     if (msg.content !== 'its a crazy night') {
-      debug ? console.log(`deleting ${msg.content}`) : '';
+      debug == 1 ? console.log(`deleting ${msg.content}`) : '';
       msg.delete();
     } else {
       // if valid message
