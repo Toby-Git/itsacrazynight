@@ -23,7 +23,10 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 
 // delete editted messages
 client.on('messageUpdate', function(oldMessage, newMessage) {
-  // newMessage.delete();
+  // if message update is to pin don't delete
+  if (newMessage.editedTimestamp !== 0) {
+    newMessage.delete();
+  }
 });
 
 client.on('message', msg => {
