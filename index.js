@@ -12,6 +12,9 @@ client.on('ready', () => {
   );
   client.user.setActivity('its a crazy night', { type: 'WATCHING' });
 });
+
+client.on('guildMemberAdd', member => {
+  forceNick(member);
 });
 
 client.on('guildMemberUpdate', (oldMem, newMem) => {
