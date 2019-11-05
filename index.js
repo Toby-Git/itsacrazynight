@@ -6,8 +6,12 @@ const Discord = require('discord.js'),
 client.login(process.env.TOKEN);
 
 client.on('ready', () => {
-  console.log('its a crazy night');
-  client.user.setActivity('its a crazy night');
+  let d = new Date();
+  console.log(
+    `its a crazy night: ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+  );
+  client.user.setActivity('its a crazy night', { type: 'WATCHING' });
+});
 });
 
 client.on('guildMemberUpdate', (oldMem, newMem) => {
