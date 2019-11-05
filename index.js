@@ -23,7 +23,7 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 
 // delete editted messages
 client.on('messageUpdate', function(oldMessage, newMessage) {
-  newMessage.delete();
+  // newMessage.delete();
 });
 
 client.on('message', msg => {
