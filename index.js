@@ -31,6 +31,27 @@ client.on('messageUpdate', function(oldMessage, newMessage) {
   }
 });
 
+// Listen for all edits and emit a custom event
+// This bypasses caching and emits for all messages regardless of post time
+client.on('raw', async event => {
+  if (event.t !== 'MESSAGE_UPDATE') return false;
+
+  // Build data needed for react event event
+  let { d: data } = event;
+
+  // exit if edit is in dm (no delete perms)
+  if (!data.guild_id) return false;
+
+  // Skip emitting if message is cached and bot can target (prevents double execution)
+  let channel = client.channels.get(data.channel_id);
+  if (channel.messages.has(data.id)) return;
+
+  let message = await channel.fetchMessage(data.id);
+
+  // pass in dummy data as arg1 so data sent as newMessage param
+  client.emit('messageUpdate', 'blank', message);
+});
+
 client.on('message', msg => {
   const debug = process.env.DEBUG;
 
