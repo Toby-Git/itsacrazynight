@@ -52,6 +52,10 @@ client.on('raw', async event => {
   client.emit('messageUpdate', 'blank', message);
 });
 
+client.on('messageReactionAdd', react => {
+  react.message.clearReactions();
+});
+
 client.on('message', msg => {
   const debug = process.env.DEBUG;
 
