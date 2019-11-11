@@ -4,6 +4,7 @@
   "description": "itsacrazynight",
   "main": "index.js",
   "dependencies": {
+    "@discordjs/uws": "^11.149.1",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "nodemon": "^1.19.4"
