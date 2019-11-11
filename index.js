@@ -59,6 +59,11 @@ client.on('messageReactionAdd', react => {
 client.on('message', msg => {
   const debug = process.env.DEBUG;
 
+  // delete pin announcements
+  if (msg.type === 'PINS_ADD') {
+    msg.delete();
+  }
+
   if (msg.guild && !msg.author.bot) {
     let pinned = [],
       roles = [],
