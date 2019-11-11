@@ -8,7 +8,7 @@ client.login(process.env.TOKEN);
 client.on('ready', () => {
   let d = new Date();
   console.log(
-    `its a crazy night: ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+    `its a crazy night: ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} - ${d.toDateString()}`
   );
   client.user.setActivity('its a crazy night', { type: 'WATCHING' });
 });
