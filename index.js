@@ -10,7 +10,9 @@ client.on('ready', () => {
   console.log(
     `its a crazy night: ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} - ${d.toDateString()}`
   );
-  client.user.setActivity('its a crazy night', { type: 'WATCHING' });
+  client.user.setPresence({
+    game: { name: 'its a crazy night', type: 0 },
+  });
 });
 
 client.on('guildMemberAdd', member => {
