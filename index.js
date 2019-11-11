@@ -32,7 +32,7 @@ client.on('messageUpdate', function(oldMessage, newMessage) {
 });
 
 client.on('message', msg => {
-  var debug = process.env.DEBUG;
+  const debug = process.env.DEBUG;
 
   if (msg.guild && !msg.author.bot) {
     let pinned = [],
