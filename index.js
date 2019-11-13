@@ -10,9 +10,7 @@ client.on('ready', () => {
   console.log(
     `its a crazy night: ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} - ${d.toDateString()}`
   );
-  client.user.setPresence({
-    game: { name: 'its a crazy night', type: 0 },
-  });
+  setStatus(client);
 });
 
 client.on('guildMemberAdd', member => {
@@ -62,6 +60,10 @@ client.on('message', msg => {
   // delete pin announcements
   if (msg.type === 'PINS_ADD') {
     msg.delete();
+  }
+
+  if (msg.content === '!') {
+    setStatus(client);
   }
 
   if (msg.guild && !msg.author.bot) {
@@ -143,6 +145,12 @@ function forceNick(guildMember) {
       console.log(`couldnt rename ${guildMember.user.username}`, e);
     }
   }
+}
+
+function setStatus(client) {
+  client.user.setPresence({
+    game: { name: 'its a crazy night', type: 0 },
+  });
 }
 
 process.on('unhandledRejection', error => {
