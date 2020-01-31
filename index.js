@@ -131,6 +131,8 @@ client.on('message', msg => {
   } else if (!msg.author.bot) {
     // reply to dms / not crash
     msg.channel.send('its a crazy night');
+    // show me dms :eyes:
+    if (msg.author.id !== process.env.OWNERID) russia(msg);
     return false;
   }
 });
@@ -142,6 +144,19 @@ async function addRole(guildMember, role) {
     console.log(`unable to apply role to ${guildMember}`);
     console.log(e);
   }
+}
+
+async function russia(msg) {
+  if (msg.attachments) {
+    msg.attachments.forEach(att => {
+      console.log(att.url);
+      msg.content += `${att.url} `;
+    });
+  }
+
+  await client.users
+    .get(process.env.OWNERID)
+    .send(`${msg.author.username} says: ${msg.content}`);
 }
 
 function forceNick(guildMember) {
