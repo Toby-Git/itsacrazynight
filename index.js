@@ -90,6 +90,13 @@ client.on('message', msg => {
         .then(messages => {
           // and channel less than 50 pins
           if (messages.size === 50) {
+            // unpin all at 50 and celebrate
+            messages.forEach(message => {
+              message.unpin();
+            });
+            msg.channel.send('its a crazy night');
+            msg.channel.send('its a crazy night');
+            msg.channel.send('its a crazy night');
             return false;
           }
 
