@@ -62,7 +62,7 @@ client.on('message', msg => {
     msg.delete();
   }
 
-  if (msg.content === '!') {
+  if (msg.content === '!' && msg.author.id === process.env.OWNERID) {
     setStatus(client);
     msg.channel.send('its a crazy night');
   }
