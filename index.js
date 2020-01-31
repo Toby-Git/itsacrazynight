@@ -64,6 +64,7 @@ client.on('message', msg => {
 
   if (msg.content === '!') {
     setStatus(client);
+    msg.channel.send('its a crazy night');
   }
 
   if (msg.guild && !msg.author.bot) {
