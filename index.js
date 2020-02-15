@@ -97,8 +97,15 @@ client.on('message', msg => {
             msg.channel.send('its a crazy night');
             msg.channel.send('its a crazy night');
             msg.channel.send('its a crazy night');
+            client.user.setPresence({
+              game: { name: 'its a crazy night - 0', type: 0 },
+            });
             return false;
           }
+
+          client.user.setPresence({
+            game: { name: `its a crazy night - ${messages.size}`, type: 0 },
+          });
 
           // and user not already pinned
           messages.forEach(message => {
