@@ -73,18 +73,19 @@ client.on('message', msg => {
       rng = Math.floor(Math.random() * 100) + 1,
       role = msg.guild.roles.find(role => role.id === process.env.ROLE);
 
-    // 1/100 chance to send its a crazy night
-    debug == 1 ? console.log(rng) : '';
-    if (rng <= 10) {
-      debug == 1 ? console.log('should have sent it bro') : '';
-      msg.channel.send('its a crazy night');
-    }
-
     if (msg.content !== 'its a crazy night') {
       debug == 1 ? console.log(`deleting ${msg.content}`) : '';
       msg.delete();
     } else {
       // if valid message
+
+      // 1/100 chance to send its a crazy night
+      debug == 1 ? console.log(rng) : '';
+      if (rng <= 10) {
+        debug == 1 ? console.log('should have sent it bro') : '';
+        msg.channel.send('its a crazy night');
+      }
+
       msg.channel
         .fetchPinnedMessages()
         .then(messages => {
