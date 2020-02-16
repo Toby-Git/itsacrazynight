@@ -104,10 +104,6 @@ client.on('message', msg => {
             return false;
           }
 
-          client.user.setPresence({
-            game: { name: `its a crazy night - ${messages.size}`, type: 0 },
-          });
-
           // and user not already pinned
           messages.forEach(message => {
             pinned.push(message.author.username);
@@ -117,6 +113,9 @@ client.on('message', msg => {
           if (!pinned.includes(msg.author.username)) {
             msg.pin().catch(e => {
               console.log(e);
+            });
+            client.user.setPresence({
+              game: { name: `its a crazy night - ${messages.size}`, type: 0 },
             });
           }
         })
