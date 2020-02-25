@@ -114,7 +114,7 @@ client.on('message', msg => {
               console.log(e);
             });
             client.user.setPresence({
-              game: { name: `its a crazy night - ${messages.size}`, type: 0 },
+              game: { name: `its a crazy night - ${messages.size + 1}`, type: 0 },
             });
           }
         })
