@@ -30,38 +30,40 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
   if (newMem.nickname !== 'its a crazy night') forceNick(newMem);
 });
 
-// delete editted messages
-client.on('messageUpdate', function(oldMessage, newMessage) {
-  // if message update is to pin don't delete
-  if (newMessage.editedTimestamp !== 0) {
-    newMessage.delete();
+// Listen for raw events
+// This is needed to bypass message caching
+client.on('raw', async event => {
+  if (event.t !== 'MESSAGE_REACTION_ADD' && event.t !== 'MESSAGE_UPDATE') return false;
+  // Build data needed for react event event
+  let { d: data } = event;
+  let channel = client.channels.get(data.channel_id);
+
+  switch (event.t) {
+    case 'MESSAGE_UPDATE':
+      let update = await channel.fetchMessage(data.id);
+      if (update.editedTimestamp !== 0) {
+        update.delete();
+      }
+      break;
+
+    case 'MESSAGE_REACTION_ADD':
+      // Skip emitting if message is cached and bot can target (prevents double execution)
+      if (channel.messages.has(data.id)) return;
+      let react = await channel.fetchMessage(data.message_id);
+      react.clearReactions().catch(e => { console.log(e) });
+      break;
+
+    default:
+      console.log('HOW')
+      return false;
+      break;
   }
 });
 
-// Listen for all edits and emit a custom event
-// This bypasses caching and emits for all messages regardless of post time
-client.on('raw', async event => {
-  if (event.t !== 'MESSAGE_UPDATE') return false;
-
-  // Build data needed for react event event
-  let { d: data } = event;
-
-  // exit if edit is in dm (no delete perms)
-  if (!data.guild_id) return false;
-
-  // Skip emitting if message is cached and bot can target (prevents double execution)
-  let channel = client.channels.get(data.channel_id);
-  if (channel.messages.has(data.id)) return;
-
-  let message = await channel.fetchMessage(data.id);
-
-  // pass in dummy data as arg1 so data sent as newMessage param
-  client.emit('messageUpdate', 'blank', message);
-});
-
 client.on('messageReactionAdd', react => {
-  react.message.clearReactions();
+  react.message.clearReactions().catch(e => { console.log(e) });
 });
+
 
 client.on('message', msg => {
   const debug = process.env.DEBUG;
