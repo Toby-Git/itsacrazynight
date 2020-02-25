@@ -97,7 +97,6 @@ client.on('message', msg => {
             });
             msg.channel.send('its a crazy night');
             msg.channel.send('its a crazy night');
-            msg.channel.send('its a crazy night');
             client.user.setPresence({
               game: { name: 'its a crazy night - 0', type: 0 },
             });
