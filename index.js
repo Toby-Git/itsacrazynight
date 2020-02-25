@@ -154,7 +154,6 @@ async function addRole(guildMember, role) {
 
 async function removeRole(guildMember, role) {
   try {
-    console.log('removed');
     await guildMember.removeRole(role);
   } catch (e) {
     console.log(`unable to remove role from ${guildMember}`);
