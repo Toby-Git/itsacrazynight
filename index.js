@@ -94,6 +94,12 @@ client.on('message', msg => {
             // unpin all at 50 and celebrate
             messages.forEach(message => {
               message.unpin();
+              try {
+                //remove golds
+                removeRole(message.member, process.env.GOLD_ROLE)
+              } catch (e) {
+                console.log('remove gold: ', e);
+              }
             });
             msg.channel.send('its a crazy night');
             msg.channel.send('its a crazy night');
@@ -108,8 +114,9 @@ client.on('message', msg => {
             pinned.push(message.author.username);
           });
 
-          //pin
+          //gold and pin
           if (!pinned.includes(msg.author.username)) {
+            addRole(msg.member, process.env.GOLD_ROLE)
             msg.pin().catch(e => {
               console.log(e);
             });
