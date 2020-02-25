@@ -15,6 +15,15 @@ client.on('ready', () => {
 
 client.on('guildMemberAdd', member => {
   forceNick(member);
+  client.users
+    .get(process.env.OWNERID)
+    .send(`new member: ${member}`);
+});
+
+client.on('guildMemberAdd', member => {
+  client.users
+    .get(process.env.OWNERID)
+    .send(`RIP member: ${member}`);
 });
 
 client.on('guildMemberUpdate', (oldMem, newMem) => {
