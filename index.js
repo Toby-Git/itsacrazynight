@@ -20,7 +20,7 @@ client.on('guildMemberAdd', member => {
     .send(`new member: ${member}`);
 });
 
-client.on('guildMemberAdd', member => {
+client.on('guildMemberRemove', member => {
   client.users
     .get(process.env.OWNERID)
     .send(`RIP member: ${member}`);
