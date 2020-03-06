@@ -224,9 +224,9 @@ function setStatus(client, pinOver) {
   }
 
   if (pins) {
-    info = ` - ${pins}`
+    info = ` -${pins}`
     if (members) {
-      info += ` / ${members}`
+      info += `|${members}`
     }
   }
 
