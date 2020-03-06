@@ -5,6 +5,9 @@ const Discord = require('discord.js'),
 
 client.login(process.env.TOKEN);
 
+var members = '';
+var pins = '';
+
 client.on('ready', () => {
   let d = new Date();
   console.log(
@@ -18,12 +21,14 @@ client.on('guildMemberAdd', member => {
   client.users
     .get(process.env.OWNERID)
     .send(`new member: ${member}`);
+  setStatus(client);
 });
 
 client.on('guildMemberRemove', member => {
   client.users
     .get(process.env.OWNERID)
     .send(`RIP member: ${member}`);
+  setStatus(client);
 });
 
 client.on('guildMemberUpdate', (oldMem, newMem) => {
@@ -114,9 +119,7 @@ client.on('message', msg => {
             });
             msg.channel.send('its a crazy night');
             msg.channel.send('its a crazy night');
-            client.user.setPresence({
-              game: { name: 'its a crazy night - 0', type: 0 },
-            });
+            setStatus(client, '0');
             return false;
           }
 
@@ -131,9 +134,7 @@ client.on('message', msg => {
             msg.pin().catch(e => {
               console.log(e);
             });
-            client.user.setPresence({
-              game: { name: `its a crazy night - ${messages.size + 1}`, type: 0 },
-            });
+             setStatus(client, (messages.size + 1));
           }
         })
         .catch(console.error);
@@ -203,9 +204,34 @@ function forceNick(guildMember) {
   }
 }
 
-function setStatus(client) {
+function setStatus(client, pinOver) {
+  let info = ''
+
+  //get members
+  client.guilds.forEach(guild => {
+    members = guild.memberCount;
+    console.log(guild.memberCount)
+  })
+  //get pins
+  if (!pinOver) {
+    client.channels.forEach(chnl => {
+      if (chnl.lastPinTimestamp > 0) {
+        chnl.fetchPinnedMessages().then(messages => { pins = (messages.size) })
+      }
+    });
+  } else {
+    pins = pinOver;
+  }
+
+  if (pins) {
+    info = ` - ${pins}`
+    if (members) {
+      info += ` / ${members}`
+    }
+  }
+
   client.user.setPresence({
-    game: { name: 'its a crazy night', type: 0 },
+    game: { name: `its a crazy night${info}`, type: 0 },
   });
 }
 
