@@ -94,8 +94,8 @@ client.on('message', msg => {
       msg.delete();
     } else {
       // if valid message
-
-      // 1/100 chance to send its a crazy night
+      
+      // 1/10 chance to send its a crazy night
       debug == 1 ? console.log(rng) : '';
       if (rng <= 10) {
         debug == 1 ? console.log('should have sent it bro') : '';
@@ -105,7 +105,7 @@ client.on('message', msg => {
       msg.channel
         .fetchPinnedMessages()
         .then(messages => {
-          // and channel less than 50 pins
+          // if channel has less than 50 pins
           if (messages.size === 50) {
             // unpin all at 50 and celebrate
             messages.forEach(message => {
@@ -123,12 +123,12 @@ client.on('message', msg => {
             return false;
           }
 
-          // and user not already pinned
+          // if user not already pinned
           messages.forEach(message => {
             pinned.push(message.author.username);
           });
 
-          //gold and pin
+          // gold and pin
           if (!pinned.includes(msg.author.username)) {
             addRole(msg.member, process.env.GOLD_ROLE)
             msg.pin().catch(e => {
@@ -207,12 +207,12 @@ function forceNick(guildMember) {
 function setStatus(client, pinOver) {
   let info = ''
 
-  //get members
+  // get members
   client.guilds.forEach(guild => {
     members = guild.memberCount;
     console.log(guild.memberCount)
   })
-  //get pins
+  // get pins
   if (!pinOver) {
     client.channels.forEach(chnl => {
       if (chnl.lastPinTimestamp > 0) {
