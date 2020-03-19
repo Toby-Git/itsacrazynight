@@ -6,4 +6,4 @@
  
  I'm sorry.
  
- If for some reason you want to join this hell you can click [here.](https://discord.gg/6uWgc4X)
+ If for some reason you want to join this hell you can click [here.](https://discord.gg/RG4ma22)
