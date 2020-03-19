@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TobyJGray/itsacrazynight.git"
+    "url": "git+https://github.com/Toby-Git/itsacrazynight.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TobyJGray/itsacrazynight/issues"
+    "url": "https://github.com/Toby-Git/itsacrazynight/issues"
   },
-  "homepage": "https://github.com/TobyJGray/itsacrazynight#readme"
+  "homepage": "https://github.com/Toby-Git/itsacrazynight#readme"
 }
