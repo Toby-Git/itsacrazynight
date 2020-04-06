@@ -17,6 +17,10 @@ client.on('ready', () => {
 });
 
 client.on('guildMemberAdd', member => {
+  if (member.guild.id !== process.env.SERVERID) {
+    return false;
+  }
+
   forceNick(member);
   client.users
     .get(process.env.OWNERID)
@@ -25,6 +29,10 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('guildMemberRemove', member => {
+  if (member.guild.id !== process.env.SERVERID) {
+    return false;
+  }
+
   client.users
     .get(process.env.OWNERID)
     .send(`RIP member: ${member}`);
@@ -42,6 +50,10 @@ client.on('raw', async event => {
   // Build data needed for react event event
   let { d: data } = event;
   let channel = client.channels.get(data.channel_id);
+
+  if (!channel || data.guild_id !== process.env.SERVERID) {
+    return false;
+  }
 
   switch (event.t) {
     case 'MESSAGE_UPDATE':
@@ -66,11 +78,23 @@ client.on('raw', async event => {
 });
 
 client.on('messageReactionAdd', react => {
-  react.message.clearReactions().catch(e => { console.log(e) });
+  if (react.message.guild === process.env.SERVERID) {
+    react.message.clearReactions().catch(e => { console.log(e) });
+  }
 });
 
 
 client.on('message', msg => {
+  let rng = Math.floor(Math.random() * 100) + 1;
+
+  if ((msg.guild && msg.guild.id !== process.env.SERVERID) && !msg.author.bot) {
+    // 1/100 chance to send message on other servers
+    if (rng <= 1) {
+      msg.channel.send('its a crazy night');
+    }
+    return false;
+  }
+
   const debug = process.env.DEBUG;
 
   // delete pin announcements
@@ -84,6 +108,7 @@ client.on('message', msg => {
   }
 
   if (msg.guild && !msg.author.bot) {
+
     let pinned = [],
       roles = [],
       rng = Math.floor(Math.random() * 100) + 1,
@@ -94,7 +119,7 @@ client.on('message', msg => {
       msg.delete();
     } else {
       // if valid message
-      
+
       // 1/10 chance to send its a crazy night
       debug == 1 ? console.log(rng) : '';
       if (rng <= 10) {
@@ -134,7 +159,7 @@ client.on('message', msg => {
             msg.pin().catch(e => {
               console.log(e);
             });
-             setStatus(client, (messages.size + 1));
+            setStatus(client, (messages.size + 1));
           }
         })
         .catch(console.error);
@@ -194,6 +219,11 @@ async function russia(msg) {
 }
 
 function forceNick(guildMember) {
+  // only rename in main server
+  if (guildMember.guild.id !== process.env.SERVERID) {
+    return false;
+  }
+
   // dont attempt to rename owner so logs aren't ruined
   if (guildMember.user.username !== owner) {
     try {
