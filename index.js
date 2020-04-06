@@ -210,7 +210,6 @@ function setStatus(client, pinOver) {
   // get members
   client.guilds.forEach(guild => {
     members = guild.memberCount;
-    console.log(guild.memberCount)
   })
   // get pins
   if (!pinOver) {
